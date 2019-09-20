@@ -1,7 +1,7 @@
 <?php
 $conn = NULL;
-if (isset($_ENV['DB_CONN'])) {
-	$conn = new PDO($_ENV['DB_CONN'], $_ENV['DB_USER'], $_ENV['DB_PASS']);
+if (getenv['DB_CONN']) {
+	$conn = new PDO(getenv('DB_CONN'), getenv('DB_USER'), getenv('DB_PASS'));
 } else {
 	$conn = new PDO("sqlite:database.db");
 }
