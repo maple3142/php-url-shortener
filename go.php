@@ -2,7 +2,7 @@
 include "sql.php";
 
 if (!isset($_GET['id'])) {
-	die("Invalid paramter");
+	die("Invalid parameter.");
 }
 
 $stat = $conn->prepare("SELECT url FROm links WHERE id = :id");

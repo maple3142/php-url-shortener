@@ -1,11 +1,11 @@
 <?php
 include "sql.php";
 
-if (!isset($_GET["delete_code"])) {
-	die("Invalid parameter");
+if (!isset($_GET["code"])) {
+	die("Invalid parameter.");
 }
 
-$delete_code = $_GET['delete_code'];
+$delete_code = $_GET['code'];
 
 $stat = $conn->prepare("DELETE FROM links WHERE delete_code = :delete_code");
 $stat->execute(array(

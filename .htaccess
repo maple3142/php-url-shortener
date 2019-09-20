@@ -1,6 +1,6 @@
 Options -MultiViews
 RewriteEngine On
 RewriteBase /
-RewriteRule ^([a-z0-9]+)$ go.php?id=$1 [L]
+RewriteRule ^([0-9a-zA-Z]+)$ go.php?id=$1 [L]
 RedirectMatch 404 /\.(.*)
 Options All -Indexes

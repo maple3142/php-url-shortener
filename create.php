@@ -1,5 +1,6 @@
 <?php
 include "sql.php";
+include "utils.php";
 
 function check_id_exists($conn, $id)
 {
@@ -11,14 +12,20 @@ function check_id_exists($conn, $id)
 	return (int) $result['cnt'] > 0;
 }
 
-if (!isset($_POST["url"])) {
-	die("Invalid parameter");
-}
 $url = $_POST["url"];
-$delete_code = uniqid();
+if (!isset($url)) {
+	die("Invalid parameter.");
+}
+if (strlen($url) <= 10) {
+	die("Url is shorturl enough already.");
+}
+if (preg_match("/^https?:\/\//", $url) != 1) {
+	die("Url must starts with http(s)://");
+}
+$delete_code = generateRandomString(20);
 $id = substr($delete_code, 0, 7);
 while (check_id_exists($conn, $id)) {
-	$delete_code = uniqid();
+	$delete_code = generateRandomString(20);
 	$id = substr($delete_code, 0, 7);
 }
 
@@ -33,6 +40,7 @@ $stat->execute(array(
 	'delete_code' => $delete_code
 ));
 
+$base_url = get_base_url();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,22 +59,16 @@ $stat->execute(array(
 			<div class="col-6">
 				<div class="form-group mb-3">
 					<label for="url">Result url</label>
-					<input class="form-control" id="url" type="text">
+					<input class="form-control" id="url" type="text" value="<?php echo $base_url.'/'.$id ?>">
 				</div>
 				<div class="form-group mb-3">
 					<label for="delete_url">Delete url</label>
-					<input class="form-control" id="delete_url" type="text">
+					<input class="form-control" id="delete_url" type="text" value="<?php echo $base_url.'/delete.php?code='.$delete_code ?>">
 				</div>
 			</div>
 		</div>
 	</div>
 	<script>
-		var id = <?php echo json_encode($id); ?>
-
-		var delete_code = <?php echo json_encode($delete_code); ?>
-
-		document.getElementById('url').value = location.protocol + '//' + location.host + '/' + id
-		document.getElementById('delete_url').value = location.protocol + '//' + location.host + '/delete.php?delete_code=' + delete_code
 		var ar = document.querySelectorAll('input')
 		for (var i = 0; i < ar.length; i++) {
 			(function(input) {

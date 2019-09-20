@@ -1,10 +1,17 @@
 <?php
 function generateRandomString($length = 10) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $charactersLength = strlen($characters);
-    $randomString = '';
+    $chs = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $chslen = strlen($chs);
+    $str = '';
     for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, $charactersLength - 1)];
+        $str .= $chs[rand(0, $chslen - 1)];
     }
-    return $randomString;
+    return $str;
+}
+function get_base_url()
+{
+	$is_https = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+	$protocol = $is_https ? 'https' : 'http';
+	$host = $_SERVER['HTTP_HOST'];
+	return $protocol . '://' . $host;
 }
