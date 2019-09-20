@@ -7,4 +7,3 @@ $conn->exec("
 		delete_code varchar(20) NOT NULL
 	);
 ");
-?>

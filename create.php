@@ -1,28 +1,29 @@
 <?php
 include "sql.php";
 
-function check_id_exists($conn, $id){
+function check_id_exists($conn, $id)
+{
 	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE id = :id");
 	$stat->execute(array(
 		'id' => $id
 	));
 	$result = $stat->fetch(PDO::FETCH_ASSOC);
-	return (int)$result['cnt']>0;
+	return (int) $result['cnt'] > 0;
 }
 
-if(!isset($_POST["url"])){
+if (!isset($_POST["url"])) {
 	die("Invalid parameter");
 }
 $url = $_POST["url"];
 $delete_code = uniqid();
 $id = substr($delete_code, 0, 7);
-while(check_id_exists($conn, $id)){
+while (check_id_exists($conn, $id)) {
 	$delete_code = uniqid();
 	$id = substr($delete_code, 0, 7);
 }
 
-$stat=$conn->prepare("INSERT INTO links (url, id, delete_code) VALUES (:url, :id, :delete_code)");
-if(is_bool($stat)){
+$stat = $conn->prepare("INSERT INTO links (url, id, delete_code) VALUES (:url, :id, :delete_code)");
+if (is_bool($stat)) {
 	var_dump($conn->errorInfo());
 	die();
 }
@@ -64,10 +65,10 @@ $stat->execute(array(
 
 		var delete_code = <?php echo json_encode($delete_code); ?>
 
-		document.getElementById('url').value = location.protocol + '//' +location.host + '/' + id
-		document.getElementById('delete_url').value = location.protocol + '//' +location.host + '/delete.php?delete_code=' + delete_code
-		var ar=document.querySelectorAll('input')
-		for(var i=0;i<ar.length;i++){
+		document.getElementById('url').value = location.protocol + '//' + location.host + '/' + id
+		document.getElementById('delete_url').value = location.protocol + '//' + location.host + '/delete.php?delete_code=' + delete_code
+		var ar = document.querySelectorAll('input')
+		for (var i = 0; i < ar.length; i++) {
 			(function(input) {
 				input.onfocus = function() {
 					input.select()
