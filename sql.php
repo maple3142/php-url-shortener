@@ -16,7 +16,7 @@ $conn->exec("
 		username varchar(20) NOT NULL,
 		email varchar(255) NOT NULL,
 		password_hash char(60) NOT NULL,
-		is_admin boolean NOT DEFAULT 0,
+		is_admin boolean NOT NULL DEFAULT 0,
 		PRIMARY KEY(id)
 	);
 ");
