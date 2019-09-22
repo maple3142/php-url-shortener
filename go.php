@@ -1,5 +1,6 @@
 <?php
 include "sql.php";
+include "utils.php";
 
 if (!isset($_GET['id'])) {
 	die("Invalid parameter.");

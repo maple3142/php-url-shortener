@@ -2,11 +2,12 @@
 include "sql.php";
 include "utils.php";
 
-function check_id_exists($conn, $id)
+function check_exists($conn, $col, $val)
 {
-	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE id = :id");
+	// $col should never accept user-input variable
+	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE $1 = :$1");
 	$stat->execute(array(
-		'id' => $id
+		$col => $val
 	));
 	$result = $stat->fetch(PDO::FETCH_ASSOC);
 	return (int) $result['cnt'] > 0;
@@ -16,17 +17,19 @@ $url = $_POST["url"];
 if (!isset($url)) {
 	die("Invalid parameter.");
 }
-if (strlen($url) <= 10) {
-	die("Url is shorturl enough already.");
-}
 if (preg_match("/^https?:\/\//", $url) != 1) {
 	die("Url must starts with http(s)://");
 }
+if (strlen($url) <= 10) {
+	die("Url is shorturl enough already.");
+}
 $delete_code = generateRandomString(20);
-$id = substr($delete_code, 0, 7);
-while (check_id_exists($conn, $id)) {
+while (check_exists($conn, 'delete_code', $delete_code)) {
 	$delete_code = generateRandomString(20);
-	$id = substr($delete_code, 0, 7);
+}
+$id = generateRandomString(rand(4, 7));
+while (check_exists($conn, 'id', $id)) {
+	$id = generateRandomString(rand(4, 7));
 }
 
 $stat = $conn->prepare("INSERT INTO links (url, id, delete_code) VALUES (:url, :id, :delete_code)");
