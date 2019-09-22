@@ -1,7 +1,4 @@
 <?php
-include "sql.php";
-include "utils.php";
-
 function check_exists($conn, $col, $val)
 {
 	// $col should never accept user-input variable
@@ -9,7 +6,7 @@ function check_exists($conn, $col, $val)
 	$stat->execute(array(
 		$col => $val
 	));
-	$result = $stat->fetch(PDO::FETCH_ASSOC);
+	$result = $stat->fetch();
 	return (int) $result['cnt'] > 0;
 }
 
@@ -23,6 +20,12 @@ if (preg_match("/^https?:\/\//", $url) != 1) {
 if (strlen($url) <= 10) {
 	die("Url is shorturl enough already.");
 }
+
+include "sql.php";
+include "utils.php";
+
+session_start();
+
 $delete_code = generateRandomString(20);
 while (check_exists($conn, 'delete_code', $delete_code)) {
 	$delete_code = generateRandomString(20);
@@ -32,7 +35,7 @@ while (check_exists($conn, 'id', $id)) {
 	$id = generateRandomString(rand(4, 7));
 }
 
-$stat = $conn->prepare("INSERT INTO links (url, id, delete_code) VALUES (:url, :id, :delete_code)");
+$stat = $conn->prepare("INSERT INTO links (url, id, delete_code, creator) VALUES (:url, :id, :delete_code, :creator)");
 if (is_bool($stat)) {
 	var_dump($conn->errorInfo());
 	die();
@@ -40,7 +43,8 @@ if (is_bool($stat)) {
 $stat->execute(array(
 	'url' => $url,
 	'id' => $id,
-	'delete_code' => $delete_code
+	'delete_code' => $delete_code,
+	'creator' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'NULL'
 ));
 
 $base_url = get_base_url();
@@ -57,16 +61,17 @@ $base_url = get_base_url();
 </head>
 
 <body>
+	<?php include "nav.php"; ?>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-6">
 				<div class="form-group mb-3">
 					<label for="url">Result url</label>
-					<input class="form-control" id="url" type="text" value="<?php echo $base_url.'/'.$id ?>">
+					<input class="form-control" id="url" type="text" value="<?php echo $base_url . '/' . $id ?>">
 				</div>
 				<div class="form-group mb-3">
 					<label for="delete_url">Delete url</label>
-					<input class="form-control" id="delete_url" type="text" value="<?php echo $base_url.'/delete.php?code='.$delete_code ?>">
+					<input class="form-control" id="delete_url" type="text" value="<?php echo $base_url . '/delete.php?code=' . $delete_code ?>">
 				</div>
 			</div>
 		</div>

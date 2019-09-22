@@ -16,4 +16,10 @@ if ($stat->rowCount() > 0) {
 } else {
 	echo "delete_code not found.";
 }
-header("Refresh: 3; url=/", true, 303);
+if (!isset($_GET['redirect']) && !preg_match("/^\//", $_GET['redirect'])) {
+	// redirect url should start with "/" only
+	header("Refresh: 3; url=/", true, 303);
+} else {
+	$r = $_GET['redirect'];
+	header("Location: $r", true, 303);
+}
