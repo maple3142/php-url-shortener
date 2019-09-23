@@ -44,7 +44,7 @@ $stat->execute(array(
 	'url' => $url,
 	'id' => $id,
 	'delete_code' => $delete_code,
-	'creator' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 'NULL'
+	'creator' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null
 ));
 
 $base_url = get_base_url();
