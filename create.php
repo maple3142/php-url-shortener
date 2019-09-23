@@ -60,7 +60,7 @@ $base_url = get_base_url();
 	<?php include "nav.php"; ?>
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-6">
+			<div class="col-lg-6">
 				<div class="form-group mb-3">
 					<label for="url">Result url</label>
 					<input class="form-control" id="url" type="text" value="<?php echo $base_url . '/' . $id ?>">
