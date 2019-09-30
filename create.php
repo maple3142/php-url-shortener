@@ -2,7 +2,7 @@
 function check_exists($conn, $col, $val)
 {
 	// $col should never accept user-input variable
-	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE $1 = :$1");
+	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE $col = :$col");
 	$stat->execute(array(
 		$col => $val
 	));
