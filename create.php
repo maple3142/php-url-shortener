@@ -3,9 +3,9 @@ function check_exists($conn, $col, $val)
 {
 	// $col should never accept user-input variable
 	$stat = $conn->prepare("SELECT COUNT(id) AS cnt FROM links WHERE $col = :$col");
-	$stat->execute(array(
+	$stat->execute([
 		$col => $val
-	));
+	]);
 	$result = $stat->fetch();
 	return (int) $result['cnt'] > 0;
 }
@@ -40,12 +40,12 @@ if (is_bool($stat)) {
 	var_dump($conn->errorInfo());
 	die();
 }
-$stat->execute(array(
+$stat->execute([
 	'url' => $url,
 	'id' => $id,
 	'delete_code' => $delete_code,
 	'creator' => isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null
-));
+]);
 
 $base_url = get_base_url();
 ?>
