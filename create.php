@@ -83,6 +83,7 @@ $base_url = get_base_url();
 			})(ar[i])
 		}
 	</script>
+	<?php include 'foot.php'; ?>
 </body>
 
 </html>

@@ -10,10 +10,10 @@ include 'utils.php';
 $stat = $conn->query("SELECT id, url, delete_code FROM links WHERE creator = " . $_SESSION['user_id']);
 $list = $stat->fetchAll();
 $base = get_base_url();
-foreach ($list as $k=>$v) {
+foreach ($list as $k => $v) {
 	$list[$k]['short'] = $base . '/' . $v['id'];
-	$delete_url= $base . '/delete.php?redirect=/profile.php&code=' . $v['delete_code'];
-	$list[$k]['confirm_delete'] = 'javascript: confirm("Are you sure?") && (location.href='.json_encode($delete_url).')';
+	$delete_url = $base . '/delete.php?redirect=/profile.php&code=' . $v['delete_code'];
+	$list[$k]['confirm_delete'] = 'javascript: confirm("Are you sure?") && (location.href=' . json_encode($delete_url) . ')';
 }
 function anchor($url, $text = NULL)
 {
@@ -60,6 +60,7 @@ function anchor($url, $text = NULL)
 			</div>
 		</div>
 	</div>
+	<?php include 'foot.php'; ?>
 </body>
 
 </html>

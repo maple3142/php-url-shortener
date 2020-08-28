@@ -25,6 +25,7 @@ if (session_id() == "") {
 			</div>
 		</div>
 	</div>
+	<?php include 'foot.php'; ?>
 </body>
 
 </html>

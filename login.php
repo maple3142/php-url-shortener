@@ -57,6 +57,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 			</div>
 		</div>
 	</div>
+	<?php include 'foot.php'; ?>
 </body>
 
 </html>

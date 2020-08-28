@@ -98,6 +98,7 @@ function value_attr($val)
 			</div>
 		</div>
 	</div>
+	<?php include 'foot.php'; ?>
 </body>
 
 </html>
