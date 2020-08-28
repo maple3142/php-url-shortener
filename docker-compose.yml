@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+    nginx:
+        image: nginx:stable
+        ports:
+            - '80:80'
+        volumes:
+            - .:/web
+            - ./conf.d:/etc/nginx/conf.d
+        links:
+            - fpm
+    fpm:
+        build:
+            context: .
+            dockerfile: php-fpm.Dockerfile
+        ports:
+            - '9000'
+        volumes:
+            - .:/web
+        environment:
+            DB_CONN: 'mysql:host=db;port=3306;dbname=surl'
+            DB_USER: user
+            DB_PASS: pass
+        links:
+            - db
+    db:
+        image: mysql:8
+        ports:
+            - '3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: pass
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: surl
