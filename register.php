@@ -71,7 +71,7 @@ function value_attr($val)
 						<?php echo $failed_message; ?>
 					</div>
 				<?php endif; ?>
-				<form action="/register.php" method="POST">
+				<form action="/register" method="POST">
 					<div class="form-group">
 						<label for="username">Username</label>
 						<input required type="text" class="form-control" name="username" placeholder="Enter username" <?php if (isset($_POST['username'])) {
@@ -93,7 +93,7 @@ function value_attr($val)
 						<input required type="password" class="form-control" name="confirm_password" placeholder="Enter password again">
 					</div>
 					<button type="submit" class="btn btn-primary">Register</button>
-					<a href="/login.php">Already have an account? Login Here!</a>
+					<a href="/login">Already have an account? Login Here!</a>
 				</form>
 			</div>
 		</div>

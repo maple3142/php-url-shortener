@@ -15,16 +15,16 @@
 				<li class="nav-item <?php if ($_SERVER['REQUEST_URI'] == '/profile.php') {
 											echo 'active';
 										} ?>">
-					<a class="nav-link" href="/profile.php">Profile</a>
+					<a class="nav-link" href="/profile">Profile</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="/logout.php">Logout</a>
+					<a class="nav-link" href="/logout">Logout</a>
 				</li>
 			<?php else : ?>
 				<li class="nav-item <?php if ($_SERVER['REQUEST_URI'] == '/login.php') {
 											echo 'active';
 										} ?>">
-					<a class="nav-link" href="/login.php">Login</a>
+					<a class="nav-link" href="/login">Login</a>
 				</li>
 			<?php endif; ?>
 	</div>

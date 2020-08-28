@@ -42,7 +42,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 						Failed to login
 					</div>
 				<?php endif; ?>
-				<form action="/login.php" method="POST">
+				<form action="/login" method="POST">
 					<div class="form-group">
 						<label for="username">Username</label>
 						<input required type="text" class="form-control" name="username" placeholder="Enter username">
@@ -52,7 +52,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 						<input required type="password" class="form-control" name="password" placeholder="Enter password">
 					</div>
 					<button type="submit" class="btn btn-primary">Login</button>
-					<a href="/register.php">No account? Register Here!</a>
+					<a href="/register">No account? Register Here!</a>
 				</form>
 			</div>
 		</div>
