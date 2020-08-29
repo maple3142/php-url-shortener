@@ -9,6 +9,8 @@ services:
             - ./conf.d:/etc/nginx/conf.d
         links:
             - fpm
+        depends_on:
+            - db
     fpm:
         build:
             context: .
@@ -23,12 +25,18 @@ services:
             DB_PASS: pass
         links:
             - db
+        depends_on:
+            - db
     db:
         image: mysql:8
         ports:
             - '3306'
+        volumes:
+            - db-volume:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: pass
             MYSQL_USER: user
             MYSQL_PASSWORD: pass
             MYSQL_DATABASE: surl
+volumes:
+    db-volume:
